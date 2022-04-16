@@ -5,9 +5,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using RestASPNET.Business;
+using RestASPNET.Business.Implementations;
 using RestASPNET.Model.Context;
-using RestASPNET.Services;
-using RestASPNET.Services.Implementations;
+using RestASPNET.Repository;
+using RestASPNET.Repository.Implementations;
 
 namespace RestASPNET
 {
@@ -29,7 +31,8 @@ namespace RestASPNET
             services.AddDbContext<MySQLContext>(options => options.UseMySql(connection,ServerVersion.AutoDetect(connection)));
            
             services.AddApiVersioning();
-            services.AddScoped<IPersonService, PersonServiceImplementation>();
+            services.AddScoped<IPersonBusiness, PersonBusinessImplementation>();
+            services.AddScoped<IPersonRepository, PersonRepositoryImplementation>();
 
             services.AddSwaggerGen(c =>
             {

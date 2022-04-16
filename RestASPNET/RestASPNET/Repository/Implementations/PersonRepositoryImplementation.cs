@@ -3,14 +3,13 @@ using RestASPNET.Model.Context;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 
-namespace RestASPNET.Services.Implementations
+namespace RestASPNET.Repository.Implementations
 {
-    public class PersonServiceImplementation : IPersonService
+    public class PersonRepositoryImplementation : IPersonRepository
     {
        private MySQLContext _context;
-        public PersonServiceImplementation(MySQLContext context)
+        public PersonRepositoryImplementation(MySQLContext context)
         {
             _context = context;
         }
@@ -77,7 +76,7 @@ namespace RestASPNET.Services.Implementations
             }
         }
             
-        private bool Exits(long id)
+        public bool Exits(long id)
         {
             return _context.People.Any(p => p.id == id);
         }
