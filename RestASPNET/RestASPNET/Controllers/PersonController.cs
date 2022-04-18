@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using RestASPNET.Model;
 using RestASPNET.Business;
+using RestASPNET.Data.VO;
 
 namespace RestASPNET.Controllers
 {
@@ -36,7 +37,7 @@ namespace RestASPNET.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] Person person)
+        public IActionResult Post([FromBody] PersonVO person)
         {           
             if (person == null)
                 return BadRequest();
@@ -44,7 +45,7 @@ namespace RestASPNET.Controllers
         }
 
         [HttpPut]
-        public IActionResult Put([FromBody] Person person)
+        public IActionResult Put([FromBody] PersonVO person)
         {
             if (person == null)
                 return BadRequest();
