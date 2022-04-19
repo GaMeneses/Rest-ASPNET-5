@@ -4,9 +4,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Net.Http.Headers;
 using Microsoft.OpenApi.Models;
 using RestASPNET.Business;
 using RestASPNET.Business.Implementations;
+using RestASPNET.HyperMedia.Enricher;
+using RestASPNET.HyperMedia.Filters;
 using RestASPNET.Model.Context;
 using RestASPNET.Repository;
 using RestASPNET.Repository.Generic;
@@ -44,6 +47,18 @@ namespace RestASPNET
                 MigrateDatabase(connection);
             }
 
+            services.AddMvc(options => {
+                options.RespectBrowserAcceptHeader = true;
+                options.FormatterMappings.SetMediaTypeMappingForFormat("xml", MediaTypeHeaderValue.Parse("application/xml"));
+                options.FormatterMappings.SetMediaTypeMappingForFormat("json", MediaTypeHeaderValue.Parse("application/json"));
+            }).AddXmlSerializerFormatters();
+
+            var filteroptions = new HyperMediaFilterOptions();
+            filteroptions.ContentResponseEnricherList.Add(new PersonEnricher());
+            filteroptions.ContentResponseEnricherList.Add(new BookEnricher());
+
+            services.AddSingleton(filteroptions);
+
             services.AddApiVersioning();
             services.AddScoped<IPersonBusiness, PersonBusinessImplementation>();
             services.AddScoped<IBookBusiness, BookBusinessImplementation>();
@@ -75,6 +90,7 @@ namespace RestASPNET
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapControllerRoute("DefaultApi", "{controller=values}/v{version=apiVersion}/{id?}");
             });
         }
 
