@@ -115,7 +115,9 @@ namespace RestASPNET
             services.AddTransient<ITokenService, TokenService>();
 
             services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
+
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IPersonRepository, PersonRepository>();
 
             services.AddSwaggerGen(c =>
             {
