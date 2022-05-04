@@ -10,8 +10,8 @@ namespace RestASPNET.Controllers
 {
     [ApiVersion("1")]
     [ApiController]
-    [Route("api/[controller]/v{version:apiVersion}")]
     [Authorize("Bearer")]
+    [Route("api/[controller]/v{version:apiVersion}")]    
     public class BookController : ControllerBase
     {     
         private readonly ILogger<BookController> _logger;
