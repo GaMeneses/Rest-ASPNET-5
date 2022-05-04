@@ -2,6 +2,7 @@
 using RestASPNET.Model.Context;
 using RestASPNET.Repository.Generic;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace RestASPNET.Repository
@@ -30,6 +31,15 @@ namespace RestASPNET.Repository
                 }
             }
             return user;
+        }
+
+        public List<Person> FindByName(string firstName, string lastName)
+        {
+            if (!string.IsNullOrWhiteSpace(firstName) || !string.IsNullOrWhiteSpace(lastName))
+                return _context.People.Where(p => p.FirstName.Contains(firstName) ||
+                        p.LastName.Contains(lastName)).ToList();
+            else
+                return null;
         }
     }
 }

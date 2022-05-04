@@ -12,5 +12,7 @@ namespace RestASPNET.Repository
         List<T> FindAll();
         T Update(T item);
         bool Exits(long id);
+        List<T> FindWithPagedSearch(string query);
+        int GetCount(string query);
     }
 }
